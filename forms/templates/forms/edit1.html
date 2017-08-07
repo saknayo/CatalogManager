@@ -1,0 +1,26 @@
+{% extends "forms/view.html" %}
+
+{% block title %}Edit Form{% endblock %}
+
+{% block form_title %}Edit Form{% endblock %}
+
+{% block input_control %} {% if permisson < 3 %} readonly {% endif %} {% endblock input_control %}
+
+{% block subinput_control %} {% if permisson < 3 %} readonly {% endif %} {% endblock %}
+
+{% block button %}
+    <form id="edit_action" method="POST">
+        {% csrf_token %} 
+        <input type="hidden" name="edit" value="editable" />
+    </form>
+
+    <div class="action_layout">
+        <button class="form_action" type="submit" name="Save" form="info_submit" 
+                {% if permisson < 0 %} disabled {% endif %}  >
+                Save </button>
+        <button class="form_action" type="submit" name="Cancel" onclick="window.history.back()" >
+                Cancel
+        </button>
+    </div>
+{% endblock button %}
+

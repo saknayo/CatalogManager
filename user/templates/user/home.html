@@ -1,0 +1,54 @@
+{% extends "user/base_head.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+            <br>
+            <div class="content white_shadow">
+                <p>User</p>
+                <hr>
+                <br>
+                <div class="center">
+		            <table id="personal_info">
+		            	<tr>
+		            		<th>User ID</th>
+		            		<th>Full Name</th>
+		            		<th>Email</th>
+		            		<th>Last Login</th>
+		            	</tr>
+		            	{% for user in userset %}
+		            	<tr>
+		            		<td><a class="" href="{% url 'user:profile' user.username%}">{{ user.username }}</a></td>
+		            		<td>{{ user.first_name }} {{ user.last_name}}</td>
+		            		<td>{{ user.email}}</td>
+		            		<td>{{ user.last_login }}</td>
+		            	</tr>
+		            	{% endfor %}
+		            </table>
+	            </div>
+            </div>
+            <br>
+            <div class="content white_shadow">
+            	<p>Submission <a class="stroked button_like" href="{% url 'forms:create' %}"><b>+</b></a></p>
+            	<hr>
+            	<br>
+                <div class="center">
+		            <table id="personal_info">
+		            	<tr>
+		            		<th>Info ID</th>
+		            		<th>Creator</th>
+		            		<th>Create Time</th>
+		            		<th>Last Save Time</th>
+		            	</tr>
+		            	{% for stats in infosset %}
+		            	<tr>
+		            		<td><a class="" href="{% url 'forms:edit' stats.info.pk %}">{{ stats.info.pk }} </a></td>
+		            		<td><a class="" href="{% url 'user:profile' stats.creator.username %}">{{ stats.creator.username }}</a></td>
+		            		<td>{{ stats.create_time }}</td>
+		            		<td>{{ stats.save_time }}</td>
+		            	</tr>
+		            	{% endfor %}
+		            </table>
+	            </div>
+            </div>
+{% endblock content %}

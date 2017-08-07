@@ -1,0 +1,20 @@
+{% extends "forms/submit_base.html" %}
+
+{% block title %}New Form{% endblock %}
+
+{% block form_title %}New Form{% endblock %}
+
+{% block input_control %} required {% endblock input_control %}
+
+            {% block button %}
+                <div class="action_layout">
+                    <button class="form_action" type="submit" name="Submit" form="info_submit" title="Once submitted,you can't edit again" 
+                            onclick="alert('Save successfully!')"
+                            {% if permisson < 0 %} disabled {% endif %}  >
+                            Submit </button>
+                    <button class="form_action" type="submit" name="Cancel" onclick="window.history.back()" >
+                            Cancel</button>
+   
+                </div>
+            {% endblock button %}
+            

@@ -1,0 +1,183 @@
+body{
+	/*background-color:#d7dcdf ;*/
+	background-color:#fafafa;
+}
+
+div#header,div#content {
+	display: table;
+	width: 80%;
+	margin: auto;
+}
+/* common style */
+.white_shadow{
+	background-color: #f1f1f1;
+	border-radius: 5px;
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+}
+.stroke{
+	color: white;
+	text-shadow:
+	-1px -1px 0 #000,  
+	1px -1px 0 #000,
+	-1px 1px 0 #000,
+	1px 1px 0 #000;
+}
+.center{
+	width: 80%;
+	margin: auto;
+}
+.form_center{
+	display: table;
+	background-color: transparent;
+	width: auto;
+	margin: auto;
+}
+
+.divider {
+	display: inline;
+	background-color: black;
+	margin: 3px;
+	height: auto;
+}
+.sub_info{
+	color: #de703c ;
+	display: inline;
+}
+/* header style */
+div.header {
+	margin-left: auto;
+	margin-right: auto;
+	padding: 20px 40px ;
+}
+
+/* index style */
+ul.index,ul.user{
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+	border-radius: 8px;
+	background-color: #666
+}
+ul.user{
+	text-align: center;
+	background-color: transparent;
+	font-size: 180%;
+}
+li.index {
+	float: right;
+}
+li.index a{
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 15px;
+	text-decoration: none;
+}
+
+/* center the content div */
+div#outer {
+	display: table;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+div#middle {
+	display: table-cell;
+	vertical-align: middle;
+}
+div.content{
+	margin-left: auto;
+	margin-right: auto;
+	margin: auto;
+	padding: 30px 40px ;
+}
+
+/* form style */
+/* make the form likes a table*/
+div.a{
+	display: table-row;
+}
+div.a div{
+	display: table-cell;
+	padding: 5px;
+	vertical-align: top;
+}
+
+
+/* button style */
+div.action_layout{
+	width: 100%;
+	display: table;
+	margin: auto;
+	text-align: center;
+
+}
+.form_action {
+	outline: 0 !important;
+	display: inline-block;
+	background-color: #ddd;
+	border-radius: 10px;
+	border: 1px solid #aaa;
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);
+}
+.form_action:hover {
+}
+.form_action:active:focus {
+	background-color: #aaa;
+	color: white;
+}
+/* button like link */
+.button_like {
+	color: black;
+	text-decoration: none;
+	padding: 0px 4px 0px 4px;
+	outline: 0 !important;
+	display: inline-block;
+	background-color: #ddd;
+	border-radius: 40px;
+	border: 1px solid #aaa;
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);
+}
+.button_like:active:focus {
+	background-color: #aaa;
+	color: white;	
+}
+/* input box style */
+input[type=text] {
+	min-height: 20px;
+	border: 1px solid #aaa;
+	border-radius: 4px;
+	background-color: #fff;
+	outline: 0 !important;
+}
+input[type=text]:focus {
+	box-shadow: 0 0 0 2px rgba(0,0,0,0.1);/*,2px 2px 2px 2px rgba(0,0,0,0.12);*/
+}
+
+/* table style */
+table{
+	width: 100%;
+	border-collapse: collapse;
+}
+th,td{
+	border: 1px solid black;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	border-left: 1px solid black;
+
+	border-collapse: collapse;
+}
+table#personal_info {
+	background-color: #fff;
+}
+table#personal_info th {
+	color: white;
+	background-color: #aaa;
+}
+table#personal_info tr:nth-child(even) {
+	background-color: #fff;
+}
+table#personal_info tr:nth-child(odd) {
+	background-color: #eee;
+}

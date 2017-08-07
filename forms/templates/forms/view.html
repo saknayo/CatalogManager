@@ -1,0 +1,65 @@
+{% extends "forms/submit_base.html" %}
+
+{% block title %}View Form{% endblock %}
+
+{% block form_title %}View Form{% endblock %}
+
+{% block input_control %} disabled {% endblock input_control %}
+
+{% block complement %}{% endblock complement %}
+
+
+{% block sub_form %}
+    {% if permisson %}
+    {% for field in user_sub_form %}
+    <div class="a">
+        <div><p class="sub_info">{{ field.label }}</p></div>
+        <div>:</div>
+        <div><input type="text" class="inputarea" name="{{ field.name }}" value="{{ field.value }}"
+        	    {% block subinput_control %} disabled {% endblock %}
+        	    />
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+{% endblock sub_form %}           
+
+{% block button %}
+    <form id="edit_action" method="POST">
+        {% csrf_token %} 
+        <input type="hidden" name="edit" value="editable" />
+    </form>
+
+    <div class="action_layout">
+        <button class="form_action" type="submit" form="edit_action" name="edit" >  
+                Edit
+        </button>
+        <button class="form_action" type="submit" name="Cancel" onclick="window.history.back()" >
+                Back
+        </button>
+    </div>
+{% endblock button %}
+
+{% block subcontent %}
+            <div class="content white_shadow">
+                <p>History </p>
+                <hr>
+                <br>
+                <div class="center">
+                    <table id="personal_info">
+                        <tr>
+                            <th>Editor</th>
+                            <th>Edit Content</th>
+                            <th>Edit Time</th>
+                        </tr>
+                        {% for hist in historyset %}
+                        <tr>
+                            <td>{{ hist.edit_user.username }}</td>
+                            <td>{{ hist.edit_content }}</td>
+                            <td>{{ hist.edit_time }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+{% endblock subcontent %}

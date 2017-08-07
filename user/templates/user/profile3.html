@@ -1,0 +1,43 @@
+{% extends "user/base_head.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<div class="outer">
+    <div class="middle"> 
+        <div class="content">
+            <p>Text</p>
+            <hr><br>
+            <form method="post">
+                {% csrf_token %} 
+                {% for field in user_form %}
+                <div class="a">
+                    <div>{{ field.label }}</div>
+                    <div>:</div>
+                    <div><input type="text" class="inputarea" name="{{ field.name }}" value="{{ field.value }}"
+                        {% if field.value and not permisson %} readonly {% endif %} required/>
+                    </div>
+                </div>
+                {% endfor %}
+
+                {% if permisson or 'b' in 'avcvb' %}
+                {% for field in profile_form %}
+                <div class="a">
+                    <div>{{ field.label }}</div>
+                    <div>:</div>
+                    <div><input type="text" class="inputarea" name="{{ field.name }}" value="{{ field.value }}"
+                        {% if field.value %} readonly {% endif %} />
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+
+                <br>
+                <div class="form_action">
+                    <button class="form_action" type="submit" name="Submit" title="Once submitted,you can't edit again">Submit </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

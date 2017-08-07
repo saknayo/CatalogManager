@@ -1,0 +1,17 @@
+{% extends "user/base.html" %}
+
+{% block title %}Header{% endblock title %}
+
+{% block header %}
+			<div class="header white_shadow">
+				<ul class="user">
+					<li class="stroke">{{ user.username }}</li>
+				</ul>
+				<br>
+				<ul class="index">
+					<li class="index"><a href="{% url 'user:home'    user.username %}">Logout</a></li>
+					<li class="index"><a href="{% url 'user:profile' user.username %}">Profile</a></li>
+					<li class="index"><a href="{% url 'user:home'    user.username %}">Home</a></li>
+				</ul>
+			</div>
+{% endblock header %}

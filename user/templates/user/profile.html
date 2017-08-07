@@ -1,0 +1,54 @@
+{% extends "user/base_head.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+            <br>
+            <div class="content white_shadow">
+                <p>Profile</p>
+                <hr><br>
+                <div class="form_center">
+                    <form method="post" id = "uprofile" action="{{ request.path }}">
+                        {% csrf_token %} 
+                        {% for field in user_form %}
+                        <div class="a">
+                            <div>{{ field.label }}</div>
+                            <div>:</div>
+                            <div><input type="text" class="inputarea" name="{{ field.name }}" value="{{ field.value }}"
+                                {% if permisson < 0 %} readonly {% endif %} required/>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                        {% if permisson or 'b' in 'avcvb' %}
+                        {% for field in profile_form %}
+                        <div class="a">
+                            <div>{{ field.label }}</div>
+                            <div>:</div>
+                            <div><input type="text" class="inputarea" name="{{ field.name }}" value="{{ field.value }}"
+                                {% if permisson < 0 %} readonly 
+                                {% elif field.name == "user_level" and permisson < 7 %} readonly {% endif %} />
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+
+                        <br>
+                    </form>
+                </div>
+                <form id="action" method="POST">
+                    {% csrf_token %} 
+                    <input type="hidden" name="next" value="{{ request.META.HTTP_REFERER }}" />
+                </form>
+                <div class="action_layout">
+                    <button class="form_action" type="submit" form="uprofile" name="save" onclick="alert('Save successfully!')"
+                            {% if permisson < 0 %} disabled {% endif %}>
+                            Save
+                    </button> 
+                    <button class="form_action" type="submit" form="action" name="back" >  
+                            Back
+                    </button>
+                </div>
+
+            </div>
+{% endblock content %}

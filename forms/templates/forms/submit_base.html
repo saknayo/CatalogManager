@@ -1,0 +1,42 @@
+{% extends "user/base_head.html" %}
+
+{% block title %}Create Info{% endblock %}
+
+{% block content %}
+            <br>
+            <div class="content white_shadow">
+                <p>{% block form_title %}Form Edit{% endblock %}</p>
+                <hr>
+                <br>
+                {% block form_content %}
+                <div class="form_center">
+                    <form method="post" id="info_submit">
+                        {% csrf_token %} 
+                        {% for field in user_form %}
+                        <div class="a">
+                            <div>{{ field.label }}</div>
+                            <div>:</div>
+                            <div><input type="text" class="inputarea" name="{{ field.name }}" value="{{ field.value }}"
+                            {% block input_control %}
+                                {% if permisson < 0 %} readonly {% endif %} required
+                            {% endblock input_control %}
+                                />
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    {% block sub_form %}
+                    {% endblock sub_form %}
+                        <input type="hidden" name="info_submit" />
+                    </form>
+                </div>
+
+                <br>
+
+                {% endblock form_content %}
+
+            {% block button %}
+            {% endblock button %}
+            </div>
+            <br>
+{% endblock content %}
