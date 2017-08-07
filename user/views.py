@@ -1,4 +1,5 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
+from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -17,6 +18,11 @@ from forms.models import Status,Infos
 # Create your views here.
 class UserLoginView(LoginView):
     template_name = 'user/login.html'
+
+@login_required
+def logout_view(request):
+    logout(request)
+    return redirect(reverse('user:login'))
 
 @login_required
 def profile_redirect(request):
