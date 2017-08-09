@@ -1,177 +1,53 @@
-@import url(fonts.css);
-@import url(base.css);
-/* LOGIN FORM */
 
-body.login {
-    background: #f8f8f8;
+/* center the content div */
+div.form-content{
+	width: 80%;
+	height: 100%;
+}
+div#outer {
+	display: table;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+div#middle {
+	display: table-cell;
+	vertical-align: middle;
+	padding: 0;
+	margin: 0;
+}
+div.form{
+	display: table;
+	margin-left: auto;
+	margin-right: auto;
+	margin: auto;
+	padding: 30px 40px ;
 }
 
-.login #header {
-    height: auto;
-    padding: 5px 16px;
+div.hints,ul.errorlist {
+	width: 170px;
 }
 
-.login #header h1 {
-    font-size: 18px;
+div.form-row {
+	padding: 5px;
 }
 
-.login #header h1 a {
-    color: #fff;
+div.submit-row {
+	display: table;	
+	margin: auto;
 }
 
-.login #content {
-    padding: 20px 20px 0;
+input:-webkit-autofill {
+	-webkit-box-shadow: 0 0 0px 1000px white inset;	
 }
 
-.login #container {
-    background: #fff;
-    border: 1px solid #eaeaea;
-    border-radius: 4px;
-    overflow: hidden;
-    width: 28em;
-    min-width: 300px;
-    margin: 100px auto;
-}
-
-.login #content-main {
-    width: 100%;
-}
-
-.login .form-row {
-    padding: 4px 0;
-    float: left;
-    width: 100%;
-    border-bottom: none;
-}
-
-.login .form-row label {
-    padding-right: 0.5em;
-    line-height: 2em;
-    font-size: 1em;
-    clear: both;
-    color: #333;
-}
-
-.login .form-row #id_username, .login .form-row #id_password {
-    clear: both;
-    padding: 8px;
-    width: 100%;
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
-}
-
-.login span.help {
-    font-size: 10px;
-    display: block;
-}
-
-.login .submit-row {
-    clear: both;
-    padding: 1em 0 0 9.4em;
-    margin: 0;
-    border: none;
-    background: none;
-    text-align: left;
-}
-
-.login .password-reset-link {
-    text-align: center;
-}
-
-.errornote {
-    font-size: 14px;
-    font-weight: 700;
-    display: block;
-    padding: 10px 12px;
-    margin: 0 0 10px 0;
-    color: #ba2121;
-    border: 1px solid #ba2121;
-    border-radius: 4px;
-    background-color: #fff;
-    background-position: 5px 12px;
-}
-
-/* FORM DEFAULTS */
-
-input, textarea, select, .form-row p, form .button {
-    margin: 2px 0;
-    padding: 2px 3px;
-    vertical-align: middle;
-    font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
-    font-weight: normal;
-    font-size: 13px;
-}
-.form-row div.help {
-    padding: 2px 3px;
-}
-
-textarea {
-    vertical-align: top;
-}
-
-input[type=text], input[type=password], input[type=email], input[type=url],
-input[type=number], textarea, select, .vTextField {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 5px 6px;
-    margin-top: 0;
-}
-
-input[type=text]:focus, input[type=password]:focus, input[type=email]:focus,
-input[type=url]:focus, input[type=number]:focus, textarea:focus, select:focus,
-.vTextField:focus {
-    border-color: #999;
-}
-
-select {
-    height: 30px;
-}
-
-select[multiple] {
-    min-height: 150px;
-}
-
-/* FORM BUTTONS */
-
-.button, input[type=submit], input[type=button], .submit-row input, a.button {
-    background: #79aec8;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    color: #fff;
-    cursor: pointer;
-}
-
-a.button {
-    padding: 4px 5px;
-}
-
-.button:active, input[type=submit]:active, input[type=button]:active,
-.button:focus, input[type=submit]:focus, input[type=button]:focus,
-.button:hover, input[type=submit]:hover, input[type=button]:hover {
-    background: #609ab6;
-}
-
-.button[disabled], input[type=submit][disabled], input[type=button][disabled] {
-    opacity: 0.4;
-}
-
-.button.default, input[type=submit].default, .submit-row input.default {
-    float: right;
-    border: none;
-    font-weight: 400;
-    background: #417690;
-}
-
-.button.default:active, input[type=submit].default:active,
-.button.default:focus, input[type=submit].default:focus,
-.button.default:hover, input[type=submit].default:hover {
-    background: #205067;
-}
-
-.button[disabled].default,
-input[type=submit][disabled].default,
-input[type=button][disabled].default {
-    opacity: 0.4;
+p.errornote ,li {
+	background-color: transparent;
+	border:3px solid white;
+	border-radius: 8px;
+	padding: 3px;
+	font-size: 80%;
+	color: black;
 }

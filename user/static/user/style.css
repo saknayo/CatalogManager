@@ -2,6 +2,9 @@ body{
 	/*background-color:#d7dcdf ;*/
 	background-color:#fafafa;
 }
+div{
+	background-color: transparent;
+}
 
 div#header,div#content {
 	display: table;
@@ -35,7 +38,6 @@ div#header,div#content {
 
 .divider {
 	display: inline;
-	background-color: black;
 	margin: 3px;
 	height: auto;
 }
@@ -144,14 +146,15 @@ div.action_layout{
 	color: white;	
 }
 /* input box style */
-input[type=text] {
+input[type=text], input[type=password] {
 	min-height: 20px;
 	border: 1px solid #aaa;
 	border-radius: 4px;
 	background-color: #fff;
 	outline: 0 !important;
+	padding: 2px;
 }
-input[type=text]:focus {
+input[type=text]:focus , input[type=password]:focus {
 	box-shadow: 0 0 0 2px rgba(0,0,0,0.1);/*,2px 2px 2px 2px rgba(0,0,0,0.12);*/
 }
 
@@ -168,8 +171,23 @@ th,td{
 
 	border-collapse: collapse;
 }
+
+th:first-child,td:first-child {
+	border-left: none;
+	text-align: center;
+}
+th:last-child,td:last-child {
+	border-right: none;
+}
+div#scroll-table{
+	height:200px;
+	overflow: auto;
+}
+thead th {
+}
 table#personal_info {
 	background-color: #fff;
+	overflow: auto;
 }
 table#personal_info th {
 	color: white;

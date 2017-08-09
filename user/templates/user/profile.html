@@ -15,7 +15,9 @@
                             <div>{{ field.label }}</div>
                             <div>:</div>
                             <div><input type="text" class="inputarea" name="{{ field.name }}" value="{{ field.value }}"
-                                {% if permisson < 0 %} readonly {% endif %} required/>
+                                {% if permisson < 0 %} readonly 
+                                {% elif field.name == "username" %} readonly
+                                {% endif %} required/>
                             </div>
                         </div>
                         {% endfor %}
@@ -51,4 +53,19 @@
                 </div>
 
             </div>
+
+            {% if user_form.username.value == request.user.username %}
+            <br>
+            <div class="content white_shadow">
+                <p>Change password</p>
+                <hr><br>
+                <form id="change-password" method="POST" action="{% url 'user:change_password' %}">
+                    {% csrf_token %} 
+                </form>
+                <div class="action_layout">
+                    <input class="form_action" type="submit" form="change-password" value="Change password" />  
+                </div>
+
+            </div>
+            {% endif %}
 {% endblock content %}

@@ -8,6 +8,7 @@
 	{% block extrastyle %}{% endblock %}
 </head>
 <body>
+	{% block body %}
 	<div id="container">
 		<div id="header">	
 			{% block header %}	
@@ -23,5 +24,6 @@
 		</div>
 	</div>
 
+	{% endblock body %}
 </body>
 </html>

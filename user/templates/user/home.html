@@ -8,20 +8,22 @@
                 <p>User</p>
                 <hr>
                 <br>
-                <div class="center">
+                <div class="center" id="scroll-table">
 		            <table id="personal_info">
-		            	<tr>
-		            		<th>User ID</th>
-		            		<th>Full Name</th>
-		            		<th>Email</th>
-		            		<th>Last Login</th>
-		            	</tr>
+		            	<thead>
+			            	<tr>
+			            		<th>User ID</th>
+			            		<th>Full Name</th>
+			            		<th>Email</th>
+			            		<th>Last Login</th>
+			            	</tr>
+		            	</thead>
 		            	{% for user in userset %}
 		            	<tr>
-		            		<td><a class="" href="{% url 'user:profile' user.username%}">{{ user.username }}</a></td>
+		            		<td class="left"><a class="" href="{% url 'user:profile' user.username%}">{{ user.username }}</a></td>
 		            		<td>{{ user.first_name }} {{ user.last_name}}</td>
 		            		<td>{{ user.email}}</td>
-		            		<td>{{ user.last_login }}</td>
+		            		<td class="right">{{ user.last_login }}</td>
 		            	</tr>
 		            	{% endfor %}
 		            </table>

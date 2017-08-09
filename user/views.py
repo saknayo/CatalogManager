@@ -1,9 +1,10 @@
-from django.shortcuts import get_object_or_404, render, redirect
-from django.contrib.auth import logout
+from django.shortcuts import get_object_or_404, render,render_to_response, redirect
+from django.contrib.auth import logout,update_session_auth_hash
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import PasswordChangeForm
 from django.http import HttpResponseRedirect,HttpResponse,Http404
 from django.utils.http import is_safe_url
 from django.views import generic
@@ -26,20 +27,33 @@ def logout_view(request):
 
 @login_required
 def profile_redirect(request):
-    url = reverse('user:profile',args=(request.user.username,))
-    url = reverse('user:home'   ,args=(request.user.username,))
+    url = reverse('user:home')   
     #url = '/user/%s/profile' % request.user.username
     return HttpResponseRedirect(url)
+
+@login_required
+def change_password(request):
+    template_name='user/change_password.html'
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('user:change_password')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, template_name, {
+        'form': form
+    })
 
 class ProfileView(LoginRequiredMixin,generic.DetailView):
     model = Profile
     template_name = 'user/profile.html'
 
-@login_required
-def ProfileView1(request,username):
-    profile=get_object_or_404(User,username=username)
-    return render(request,'user/profile.html',{'user':profile})
-    return HttpResponse()
+
 #@login_required
 #def update_profile(request, user_name):
 #    user = User.objects.get(username=user_name)
@@ -50,7 +64,7 @@ def ProfileView1(request,username):
 class UserForm(djforms.ModelForm):
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'email')
+        fields = ('username','first_name', 'last_name', 'email')
 
 class ProfileForm(djforms.ModelForm):
     class Meta:
@@ -98,15 +112,13 @@ include profile shortcut,
         user list(only visable to admin)
 '''
 @login_required
-def home(request,username):
+def home(request):
     template_name = 'user/home.html'
     #user=User.objects.get(username=username)
-    user  =get_object_or_404(User,username=username)
-    if request.user != user :
-        raise Http404("User's infomation is protected!")
+    user  = request.user
 
     if user.profile.user_level>=7 :
-        userset=User.objects.order_by('-last_login')[:10]
+        userset=User.objects.order_by('-last_login')
     else :
         userset=User.objects.filter(username=user.username)
 
@@ -119,3 +131,26 @@ def home(request,username):
 
     return render(request,template_name,{'userset':userset,'infosset':infosset,})
 
+class UserForm2(djforms.ModelForm):
+    class Meta:
+        model = User  
+        fields = ('first_name', 'last_name', 'email')
+        fields=('username','password')
+
+def register(request):
+    if request.method == 'POST':
+        uf = UserForm2(request.POST, prefix='user')
+        #upf = UserProfileForm(request.POST, prefix='userprofile')
+        if uf.is_valid() :#* upf.is_valid():
+            user = uf.save()
+            #userprofile = upf.save(commit=False)
+            #userprofile.user = user
+            #userprofile.save()
+            return redirect('user:login')
+    else:
+        uf = UserForm2(prefix='user')
+        #upf = UserProfileForm(prefix='userprofile')
+    return render(request,'user/register.html', 
+                                                { 'userform':uf,},
+                                                    #userprofileform=upf),
+                                               )
