@@ -8,6 +8,10 @@ from .models import Infos,Status,Historys
 from django import forms
 
 # Create your views here.
+class InfosForm(forms.ModelForm):
+	class Meta:
+		model  = Infos
+		fields = '__all__'
 
 def submission_export(queryset,filename='mydata.csv'):
     import csv
@@ -16,17 +20,20 @@ def submission_export(queryset,filename='mydata.csv'):
     response['Content-Disposition'] = 'attachment; filename={}'.format(filename)
     writer = csv.writer(response, csv.excel)
     response.write(u'\ufeff'.encode('utf8')) # BOM (optional...Excel needs it to open UTF-8 file properly)
-    writer.writerow([
-        smart_str(u"InfoID"),
-        smart_str(u"Creator"),
-        smart_str(u"Create_time"),
-    ])
+    writer.writerow( [ smart_str(field.name) for field in queryset[0] ] )
     for obj in queryset:
-        writer.writerow([
-            smart_str(obj.pk),
-            smart_str(obj.status.creator.username),
-            smart_str(obj.status.create_time),
-        ])
+	    writer.writerow( [ smart_str(field.value()) for field in obj ] )
+    #writer.writerow([
+    #    smart_str(u"InfoID"),
+    #    smart_str(u"Creator"),
+    #    smart_str(u"Create_time"),
+    #])
+    #for obj in queryset:
+    #    writer.writerow([
+    #        smart_str(obj.pk),
+    #        smart_str(obj.status.creator.username),
+    #        smart_str(obj.status.create_time),
+    #    ])
     return response 
 
 @login_required
@@ -36,9 +43,12 @@ def index_view(request):
 		return HttpResponse("Permission forbiden!")
 
 	infosset=Infos.objects.exclude(status__creator__isnull=True)
+	userinfoset=[]
+	for i in infosset :
+		userinfoset.append(InfosForm(instance=i))
 	if request.method == 'POST' and 'download' in request.POST :
-		return submission_export(infosset)
-	return render(request,template_name,{'infosset':infosset,})
+		return submission_export(userinfoset)
+	return render(request,template_name,{'infosset':userinfoset,})
 
 
 class UserAppForm(forms.ModelForm):

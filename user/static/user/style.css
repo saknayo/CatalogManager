@@ -33,7 +33,7 @@ div#header,div#content {
 .form_center{
 	display: table;
 	background-color: transparent;
-	width: auto;
+	width: 80%;
 	margin: auto;
 }
 
@@ -46,6 +46,7 @@ div#header,div#content {
 	color: #de703c ;
 	display: inline;
 }
+
 /* header style */
 div.header {
 	margin-left: auto;
@@ -160,16 +161,30 @@ input[type=text]:focus , input[type=password]:focus {
 }
 
 /* table style */
+
+div.scroll-table{
+	margin: auto;
+	height: 400px;
+	max-width: 800px;
+	overflow: auto;
+}
+
 table{
 	width: 100%;
 	border-collapse: collapse;
 }
-th,td{
-	border: 1px solid black;
-	border-top: 1px solid black;
-	border-bottom: 1px solid black;
-	border-left: 1px solid black;
+th{
+	min-width: 100px;
+	min-height: 30px;
+	border-top: 2px solid black;
+	border-bottom: 2px solid black;
+	border-left: 1px solid #999;
+}
 
+td{
+	min-width: 100px;
+	min-height: 30px;
+	border: 1px solid #999;
 	border-collapse: collapse;
 }
 
@@ -179,12 +194,6 @@ th:first-child,td:first-child {
 }
 th:last-child,td:last-child {
 	border-right: none;
-}
-div#scroll-table{
-	height:200px;
-	overflow: auto;
-}
-thead th {
 }
 table#personal_info {
 	background-color: #fff;
@@ -199,4 +208,8 @@ table#personal_info tr:nth-child(even) {
 }
 table#personal_info tr:nth-child(odd) {
 	background-color: #eee;
+}
+
+pre{
+	display: inline;
 }
