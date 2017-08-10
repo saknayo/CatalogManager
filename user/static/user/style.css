@@ -26,7 +26,8 @@ div#header,div#content {
 	1px 1px 0 #000;
 }
 .center{
-	width: 80%;
+	display: table;
+	width: auto;
 	margin: auto;
 }
 .form_center{

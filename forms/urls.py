@@ -3,7 +3,7 @@ from . import views
 
 app_name = 'forms'
 urlpatterns=[
-	url(r'^$',views.index ,name='index'),
-	url(r'^create/$',views.create,name='create'),
-	url(r'^edit/(?P<pk>\d+)/$',views.edit1,name='edit'),
+	url(r'^create/$',views.create_view,name='create'),
+	url(r'^edit/(?P<pk>\d+)/$',views.edit_view,name='edit'),
+	url(r'^index/$', views.index_view,name='index')
 ]

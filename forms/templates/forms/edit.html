@@ -1,27 +1,26 @@
-{% extends "forms/create.html" %}
+{% extends "forms/view.html" %}
 
-{% block title %}Edit Info{% endblock %}
+{% block title %}Edit Form{% endblock %}
 
-{% block subcontent %}
-            <div class="content white_shadow">
-                <p>History </p>
-                <hr>
-                <br>
-                <div class="center">
-                    <table id="personal_info">
-                        <tr>
-                            <th>Editor</th>
-                            <th>Edit Content</th>
-                            <th>Edit Time</th>
-                        </tr>
-                        {% for hist in historyset %}
-                        <tr>
-                            <td>{{ hist.edit_user.username }}</td>
-                            <td>{{ hist.edit_content }}</td>
-                            <td>{{ hist.edit_time }}</td>
-                        </tr>
-                        {% endfor %}
-                    </table>
-                </div>
-            </div>
-{% endblock subcontent %}
+{% block form_title %}Edit Form{% endblock %}
+
+{% block input_control %} {% if permisson < 3 %} readonly {% endif %} {% endblock input_control %}
+
+{% block subinput_control %} {% if permisson < 3 %} readonly {% endif %} {% endblock %}
+
+{% block button %}
+    <form id="edit_action" method="POST">
+        {% csrf_token %} 
+        <input type="hidden" name="edit" value="editable" />
+    </form>
+
+    <div class="action_layout">
+        <button class="form_action" type="submit" name="Save" form="info_submit" 
+                {% if permisson < 0 %} disabled {% endif %}  >
+                Save </button>
+        <button class="form_action" type="submit" name="Cancel" onclick="window.history.back()" >
+                Cancel
+        </button>
+    </div>
+{% endblock button %}
+

@@ -19,4 +19,5 @@ urlpatterns=[
 	url(r'^profile/$', views.profile_redirect,name='profile_redirect'),
 	#url(r'^(?P<username>[\d\w_]+)/profile/$', views.ProfileView1),
 	url(r'^profile/(?P<username>[\d\w_]+)/$', views.update_profile,name='profile'),
+	url(r'^userexport/$', views.userexport , name='userexport'),
 ]

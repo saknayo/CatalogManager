@@ -9,7 +9,7 @@ from django import forms
 
 # Create your views here.
 
-def index(request):
+def index_view(request):
 	return HttpResponse("Hello, you are at the index of forms")
 
 
@@ -32,7 +32,7 @@ class UserAppSubForm(forms.ModelForm):
 			)
 
 @login_required
-def create(request):
+def create_view(request):
 	template_name="forms/create1.html"
 	if request.method == 'POST' :
 		new_user_form=UserAppForm(request.POST)
@@ -59,9 +59,9 @@ def create(request):
 	return render(request,template_name,{'user_form':new_user_form,})
 
 @login_required
-def edit1(request,pk):
+def edit_view(request,pk):
 	if 'edit' in request.POST :
-		template_name='forms/edit1.html'
+		template_name='forms/edit.html'
 	else :
 		template_name='forms/view.html'
 

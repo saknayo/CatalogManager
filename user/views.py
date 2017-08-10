@@ -134,7 +134,6 @@ def home(request):
 class UserForm2(djforms.ModelForm):
     class Meta:
         model = User  
-        fields = ('first_name', 'last_name', 'email')
         fields=('username','password')
 
 def register(request):
@@ -154,3 +153,24 @@ def register(request):
                                                 { 'userform':uf,},
                                                     #userprofileform=upf),
                                                )
+@login_required
+def userexport(request):
+    import csv
+    from django.utils.encoding import smart_str
+    queryset=User.objects.all()
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=mymodel.csv'
+    writer = csv.writer(response, csv.excel)
+    response.write(u'\ufeff'.encode('utf8')) # BOM (optional...Excel needs it to open UTF-8 file properly)
+    writer.writerow([
+        smart_str(u"ID"),
+        smart_str(u"Username"),
+        smart_str(u"Location"),
+    ])
+    for obj in queryset:
+        writer.writerow([
+            smart_str(obj.pk),
+            smart_str(obj.username),
+            smart_str(obj.first_name),
+        ])
+    return response 
