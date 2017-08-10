@@ -1,50 +1,20 @@
-{% extends "user/base_head.html" %}
+{% extends "forms/submit_base.html" %}
 
-{% block title %}Create Info{% endblock %}
+{% block title %}New Form{% endblock %}
 
-{% block content %}
-            <br>
-            <div class="content white_shadow">
-                <p>Form Edit</p>
-                <hr>
-                <br>
+{% block form_title %}New Form{% endblock %}
 
-                <div class="form_center">
-                    <form method="post" id="info_submit">
-                        {% csrf_token %} 
-                        {% for field in user_form %}
-                        <div class="a">
-                            <div>{{ field.label }}</div>
-                            <div>:</div>
-                            <div><input type="text" class="inputarea" name="{{ field.name }}" value="{{ field.value }}"
-                                {% if permisson < 0 %} readonly {% endif %} required/>
-                            </div>
-                        </div>
-                        {% endfor %}
+{% block input_control %} required {% endblock input_control %}
 
-                        {% if permisson and rqtype == 'edit' %}
-                        {% for field in user_sub_form %}
-                        <div class="a">
-                            <div><p class="sub_info">{{ field.label }}</p></div>
-                            <div>:</div>
-                            <div><input type="text" class="inputarea" name="{{ field.name }}" value="{{ field.value }}"
-                                {% if permisson < 0 %} readonly {% endif %} />
-                            </div>
-                        </div>
-                        {% endfor %}
-                        {% endif %}
-
-
-                    </form>
-                </div>
-
-                <br>
+            {% block button %}
                 <div class="action_layout">
                     <button class="form_action" type="submit" name="Submit" form="info_submit" title="Once submitted,you can't edit again" 
                             onclick="alert('Save successfully!')"
                             {% if permisson < 0 %} disabled {% endif %}  >
                             Submit </button>
+                    <button class="form_action" type="submit" name="Cancel" onclick="window.history.back()" >
+                            Cancel</button>
+   
                 </div>
-            </div>
-            <br>
-{% endblock content %}
+            {% endblock button %}
+            

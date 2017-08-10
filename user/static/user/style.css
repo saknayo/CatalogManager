@@ -27,7 +27,7 @@ div#header,div#content {
 }
 .center{
 	display: table;
-	width: auto;
+	width: 80%;
 	margin: auto;
 }
 .form_center{

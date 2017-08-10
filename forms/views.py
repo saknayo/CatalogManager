@@ -9,8 +9,36 @@ from django import forms
 
 # Create your views here.
 
+def submission_export(queryset,filename='mydata.csv'):
+    import csv
+    from django.utils.encoding import smart_str
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename={}'.format(filename)
+    writer = csv.writer(response, csv.excel)
+    response.write(u'\ufeff'.encode('utf8')) # BOM (optional...Excel needs it to open UTF-8 file properly)
+    writer.writerow([
+        smart_str(u"InfoID"),
+        smart_str(u"Creator"),
+        smart_str(u"Create_time"),
+    ])
+    for obj in queryset:
+        writer.writerow([
+            smart_str(obj.pk),
+            smart_str(obj.status.creator.username),
+            smart_str(obj.status.create_time),
+        ])
+    return response 
+
+@login_required
 def index_view(request):
-	return HttpResponse("Hello, you are at the index of forms")
+	template_name='forms/index.html'
+	if request.user.profile.user_level <7 :
+		return HttpResponse("Permission forbiden!")
+
+	infosset=Infos.objects.exclude(status__creator__isnull=True)
+	if request.method == 'POST' and 'download' in request.POST :
+		return submission_export(infosset)
+	return render(request,template_name,{'infosset':infosset,})
 
 
 class UserAppForm(forms.ModelForm):
@@ -33,7 +61,7 @@ class UserAppSubForm(forms.ModelForm):
 
 @login_required
 def create_view(request):
-	template_name="forms/create1.html"
+	template_name="forms/create.html"
 	if request.method == 'POST' :
 		new_user_form=UserAppForm(request.POST)
 		if new_user_form.is_valid() or True :

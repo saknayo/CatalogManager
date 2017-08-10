@@ -1,0 +1,41 @@
+{% extends "forms/submit_base.html" %}
+
+{% block title %}Forms Index{% endblock %}
+
+{% block form_title %}Forms List{% endblock %}
+
+{% block input_control %} required {% endblock input_control %}
+            {% block form_content %}
+                <div class="form_center">
+                    <table id="personal_info">
+                        <tr>
+                            <th>Info ID</th>
+                            <th>Creator</th>
+                            <th>Create Time</th>
+                            <th>Last Save Time</th>
+                        </tr>
+                        {% for info in infosset %}
+                        <tr>
+                            <td><a class="" href="{% url 'forms:edit' info.pk %}">{{ info.pk }} </a></td>
+                            <td><a class="" href="{% url 'user:profile' info.status.creator.username %}">{{ info.status.creator.username }}</a></td>
+                            <td>{{ info.stats.create_time }}</td>
+                            <td>{{ info.stats.save_time }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table> 
+                    
+                </div>
+
+            {% endblock form_content %}
+
+            {% block button %}
+                <div class="action_layout">
+                    <form id="save_as_csv" method="post">{% csrf_token %}</form>
+                    <button class="form_action" type="submit" name="download" form="save_as_csv" >
+                            Download</button>
+                    <button class="form_action" type="submit" name="Cancel" onclick="window.history.back()" >
+                            Cancel</button>
+   
+                </div>
+            {% endblock button %}
+            
