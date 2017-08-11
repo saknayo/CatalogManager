@@ -1,11 +1,13 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import redirect,get_object_or_404, render
 from django.urls import reverse
-from django.http import HttpResponse,HttpResponseRedirect,Http404
+from django.http import HttpResponse,Http404
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 
 from .models import Infos,Status,Historys
 from django import forms
+import re
+from collections import OrderedDict
 
 # Create your views here.
 class InfosForm(forms.ModelForm):
@@ -36,6 +38,9 @@ def submission_export(queryset,filename='mydata.csv'):
     #    ])
     return response 
 
+def get_selected_ids(post_dict):
+	id_p=re.compile(r'info_(?P<id>\d+)$')
+	return [int(id_p.search(k).group('id')) for k in post_dict if id_p.search(k)]
 @login_required
 def index_view(request):
 	template_name='forms/index.html'
@@ -43,12 +48,24 @@ def index_view(request):
 		return HttpResponse("Permission forbiden!")
 
 	infosset=Infos.objects.exclude(status__creator__isnull=True)
-	userinfoset=[]
-	for i in infosset :
-		userinfoset.append(InfosForm(instance=i))
-	if request.method == 'POST' and 'download' in request.POST :
-		return submission_export(userinfoset)
-	return render(request,template_name,{'infosset':userinfoset,})
+	infos_dict={i.pk:InfosForm(instance=i) for i in infosset}
+	infos_dict=OrderedDict(sorted(infos_dict.items(),reverse=True))
+	selected_ids=get_selected_ids(request.POST)
+	selected_infos=[infos_dict[i.pk] for i in infosset if i.pk in selected_ids ]
+
+	if request.method == 'POST' :
+		if 'download' in request.POST :
+			if selected_ids:
+				return submission_export(selected_infos,filename='selected_{}.csv'.format(len(selected_infos)))
+			else :
+				return submission_export(list(infos_dict.values()))
+		elif 'delete' in request.POST :
+			for i in selected_ids :
+				instance=Infos.objects.get(pk=i)
+				instance.delete()
+			return redirect('forms:index')
+
+	return render(request,template_name,{'infosset':infos_dict,})
 
 
 class UserAppForm(forms.ModelForm):
@@ -85,7 +102,7 @@ def create_view(request):
 			his.save()
 
 			new_user_form.save_m2m()
-			return HttpResponseRedirect(reverse('forms:edit',args=(new_infos.pk,)))
+			return redirect(reverse('forms:edit',args=(new_infos.pk,)))
 	else:
 		new_user_form=UserAppForm()
 
@@ -119,7 +136,7 @@ def edit_view(request,pk):
 			his=Historys.objects.create(info=info,edit_user=request.user,edit_time=timezone.now(),edit_content='edit')
 			his.save()
 		
-			return HttpResponseRedirect(reverse('forms:edit',args=(info.pk,)))
+			return redirect(reverse('forms:edit',args=(info.pk,)))
 	else:
 		user_form=UserAppForm(instance=info)
 		user_sub_form=UserAppSubForm(instance=info)
