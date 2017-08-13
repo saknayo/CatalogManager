@@ -3,15 +3,16 @@
 {% block title %}Header{% endblock title %}
 
 {% block header %}
-			<div class="header white_shadow">
-				<ul class="user">
-					<li class="stroke">{{ user.username }}</li>
-				</ul>
-				<br>
+			<div class="header">
 				<ul class="index">
 					<li class="index"><a href="{% url 'user:logout'                %}">Logout</a></li>
+					<li class="index"><a href="{% url 'admin:index'                %}">Admin</a></li>
 					<li class="index"><a href="{% url 'user:profile' user.username %}">Profile</a></li>
-					<li class="index"><a href="{% url 'user:home'                  %}">Home</a></li>
+					<li class="index"><a href="{% url 'user:home'                  %}">{{ user.username }}</a></li>
+					{% if request.user.profile.user_level >= 7 %}
+					{% endif %}
 				</ul>
 			</div>
 {% endblock header %}
+
+

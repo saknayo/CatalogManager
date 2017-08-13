@@ -24,3 +24,26 @@
     </div>
 {% endblock button %}
 
+
+{% block special_field %}
+<div class="a">
+    <div>获奖情况</div>
+    <div>:</div>
+    <div>
+        <ul class="vertical_container">
+        {% for k,value in reward_dict.items %}
+        {% if forloop.last and forloop.counter != 1 %}
+        <li>
+            <textarea  class="textarea inputarea" name="{{ k }}" ></textarea>
+        </li>
+        {% else %}
+         <li>
+            <input type="text" class="inputarea" name="{{ k }}" value="{{ value }}"
+                    {% if permisson < 0 %} readonly {% endif %}  >
+        </li>       
+        {% endif %}
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock special_field %}

@@ -10,32 +10,34 @@
                 <div class="form_center">
                     <form method="post" id = "uprofile" action="{{ request.path }}">
                         {% csrf_token %} 
-                        {% for field in user_form %}
-                        <div class="a">
-                            <div>{{ field.label }}</div>
-                            <div>:</div>
-                            <div><input type="text" class="inputarea" name="{{ field.name }}" value="{{ field.value }}"
-                                {% if permisson < 0 %} readonly 
-                                {% elif field.name == "username" %} readonly
-                                {% endif %} required/>
+                        <div class="form_width_ajust">
+                            {% for field in user_form %}
+                            <div class="a">
+                                <div>{{ field.label }}</div>
+                                <div>:</div>
+                                <div><input type="text" class="inputarea" name="{{ field.name }}" value="{{ field.value }}"
+                                    {% if permisson < 0 %} readonly 
+                                    {% elif field.name == "username" %} readonly
+                                    {% endif %} required/>
+                                </div>
                             </div>
-                        </div>
-                        {% endfor %}
+                            {% endfor %}
 
-                        {% if permisson or 'b' in 'avcvb' %}
-                        {% for field in profile_form %}
-                        <div class="a">
-                            <div>{{ field.label }}</div>
-                            <div>:</div>
-                            <div><input type="text" class="inputarea" name="{{ field.name }}" value="{{ field.value }}"
-                                {% if permisson < 0 %} readonly 
-                                {% elif field.name == "user_level" and permisson < 7 %} readonly {% endif %} />
+                            {% if permisson or 'b' in 'avcvb' %}
+                            {% for field in profile_form %}
+                            <div class="a">
+                                <div>{{ field.label }}</div>
+                                <div>:</div>
+                                <div><input type="text" class="inputarea" name="{{ field.name }}" value="{{ field.value }}"
+                                    {% if permisson < 0 %} readonly 
+                                    {% elif field.name == "user_level" and permisson < 7 %} readonly {% endif %} />
+                                </div>
                             </div>
-                        </div>
-                        {% endfor %}
-                        {% endif %}
+                            {% endfor %}
+                            {% endif %}
 
-                        <br>
+                            <br>
+                        </div>
                     </form>
                 </div>
                 <form id="action" method="POST">

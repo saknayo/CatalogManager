@@ -1,6 +1,8 @@
 body{
 	/*background-color:#d7dcdf ;*/
 	background-color:#fafafa;
+	padding: 0;
+	margin: 0;
 }
 div{
 	background-color: transparent;
@@ -10,6 +12,8 @@ div#header,div#content {
 	display: table;
 	width: 80%;
 	margin: auto;
+	margin-top: 0;
+	padding-top: 0;
 }
 /* common style */
 .white_shadow{
@@ -36,6 +40,10 @@ div#header,div#content {
 	width: 80%;
 	margin: auto;
 }
+.form_width_ajust{
+	display: table;
+	margin: auto;
+}
 
 .divider {
 	display: inline;
@@ -46,16 +54,39 @@ div#header,div#content {
 	color: #de703c ;
 	display: inline;
 }
+.inputarea {
+	min-height: 20px;
+	border: 1px solid #aaa;
+	border-radius: 4px;
+	background-color: #fff;
+	outline: 0 !important;
+	padding: 2px;
+}
+.inputarea:focus{
+	box-shadow: 0 0 0 2px rgba(0,0,0,0.1);/*,2px 2px 2px 2px rgba(0,0,0,0.12);*/
+}
+}
 
 /* header style */
 div.header {
+	position: absolute;
+	margin-top: 0;
 	margin-left: auto;
 	margin-right: auto;
-	padding: 20px 40px ;
+	padding: 0;
 }
 
 /* index style */
-ul.index,ul.user{
+ul.index{
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+	background-color: #666
+}
+ul.user{
 	list-style-type: none;
 	margin: 0px;
 	padding: 0px;
@@ -72,10 +103,12 @@ li.index {
 	float: right;
 }
 li.index a{
+	font-size: 98%;
 	display: block;
 	color: white;
 	text-align: center;
-	padding: 15px;
+	padding: 4px;
+	padding-right: 15px;
 	text-decoration: none;
 }
 
@@ -101,6 +134,7 @@ div.content{
 /* make the form likes a table*/
 div.a{
 	display: table-row;
+	margin: auto;
 }
 div.a div{
 	display: table-cell;
@@ -164,9 +198,12 @@ input[type=text]:focus , input[type=password]:focus {
 
 div.scroll-table{
 	margin: auto;
-	height: 400px;
+	max-height: 400px;
 	max-width: 800px;
 	overflow: auto;
+}
+div.user-list {
+	max-height: 200px;
 }
 
 table{
@@ -212,4 +249,17 @@ table#personal_info tr:nth-child(odd) {
 
 pre{
 	display: inline;
+}
+
+ul.vertical_container {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+li {
+	margin-bottom: 5px;
+}
+
+input:invalid{
+	border:2px dashed red;
 }

@@ -25,17 +25,6 @@ def submission_export(queryset,filename='mydata.csv'):
     writer.writerow( [ smart_str(field.name) for field in queryset[0] ] )
     for obj in queryset:
 	    writer.writerow( [ smart_str(field.value()) for field in obj ] )
-    #writer.writerow([
-    #    smart_str(u"InfoID"),
-    #    smart_str(u"Creator"),
-    #    smart_str(u"Create_time"),
-    #])
-    #for obj in queryset:
-    #    writer.writerow([
-    #        smart_str(obj.pk),
-    #        smart_str(obj.status.creator.username),
-    #        smart_str(obj.status.create_time),
-    #    ])
     return response 
 
 def get_selected_ids(post_dict):
@@ -75,8 +64,22 @@ class UserAppForm(forms.ModelForm):
 		fields = ('上报时间','支部名称','党员类别','类别编号',
 				  '姓名','性别','身份证号','民族','籍贯',
 				  '职级','职务','职称','文化程度','学位','工作时间',
-				  '支部讨论入党时间','支部讨论转正时间','获奖情况','入党志愿书编号',
-					)
+				  '支部讨论入党时间','支部讨论转正时间','入党志愿书编号',
+				  '获奖情况',
+				  )
+class UserAppNeForm(forms.ModelForm):
+	"""docstring for UserAppForm"""
+	class Meta:
+		model  = Infos
+		fields = ('上报时间','支部名称','党员类别','类别编号',
+				  '姓名','性别','身份证号','民族','籍贯',
+				  '职级','职务','职称','文化程度','学位','工作时间',
+				  '支部讨论入党时间','支部讨论转正时间','入党志愿书编号',
+				  )
+class UserRewardForm(forms.ModelForm):
+	class Meta :
+		model = Infos
+		fields= ('获奖情况',)
 
 class UserAppSubForm(forms.ModelForm):
 	class Meta:
@@ -113,6 +116,11 @@ def create_view(request):
 
 	return render(request,template_name,{'user_form':new_user_form,})
 
+def get_rewards(post_dict):
+	id_p=re.compile(r'(?P<id>reward_\d+)')
+	reward_dict={k:post_dict[k] for k in post_dict if id_p.search(k)}
+	return OrderedDict(sorted(reward_dict.items()))
+
 @login_required
 def edit_view(request,pk):
 	if 'edit' in request.POST :
@@ -126,11 +134,16 @@ def edit_view(request,pk):
 		if request.user != info.status.creator :
 			raise Http404("User's infomation is protected!")
 	if request.method == 'POST' and 'info_submit' in request.POST :
-		user_form=UserAppForm(request.POST,instance=info)
+		user_form=UserAppNeForm(request.POST,instance=info)
+		reward_dict=get_rewards(request.POST)
+		user_reward_form=UserRewardForm(
+			{'获奖情况':','.join(reward_dict.values())},
+			instance=info)
 		user_sub_form=UserAppSubForm(request.POST,instance=info)
 
-		if user_form.is_valid() and user_sub_form.is_valid():
+		if user_form.is_valid() and user_sub_form.is_valid() and user_reward_form.is_valid():
 			user_form.save()
+			user_reward_form.save()
 			user_sub_form.save()
 
 			his=Historys.objects.create(info=info,edit_user=request.user,edit_time=timezone.now(),edit_content='edit')
@@ -138,8 +151,15 @@ def edit_view(request,pk):
 		
 			return redirect(reverse('forms:edit',args=(info.pk,)))
 	else:
-		user_form=UserAppForm(instance=info)
+		user_form=UserAppNeForm(instance=info)
 		user_sub_form=UserAppSubForm(instance=info)
+		reward_list=getattr(info,'获奖情况').split(',')
+		reward_dict=OrderedDict({ 
+			('reward_{}'.format(i),reward_list[i]) for i in range(len(reward_list)) if reward_list[i]
+			})
+		reward_dict.update({ 'reward_{}'.format(1+len(reward_dict)):None })
+		#reward_dict={}
+
 
 	#for h in Historys.objects.all():
 	#	h.full_clean()
@@ -147,6 +167,7 @@ def edit_view(request,pk):
 	return render(request,template_name,
 				{
 					'user_form'    :user_form,
+					'reward_dict'  :reward_dict,
 					'user_sub_form':user_sub_form,
 					'permisson'    :permisson,
 					'historyset'   :historyset,

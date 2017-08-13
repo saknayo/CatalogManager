@@ -9,6 +9,26 @@
 {% block complement %}{% endblock complement %}
 
 
+{% block special_field %}
+<div class="a">
+    <div>获奖情况</div>
+    <div>:</div>
+    <div>
+        <ul class="vertical_container">
+        {% for k,value in reward_dict.items %}
+        {% if forloop.last and forloop.counter != 1 %}
+        {% else %}
+         <li>
+            <input type="text" class="inputarea" name="{{ k }}" value="{{ value }}"
+                     disabled  >
+        </li>       
+        {% endif %}
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock special_field %}
+
 {% block sub_form %}
     {% if permisson %}
     {% for field in user_sub_form %}

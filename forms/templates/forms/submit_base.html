@@ -12,22 +12,29 @@
                 <div class="form_center">
                     <form method="post" id="info_submit">
                         {% csrf_token %} 
-                        {% for field in user_form %}
-                        <div class="a">
-                            <div>{{ field.label }}</div>
-                            <div>:</div>
-                            <div><input type="text" class="inputarea" name="{{ field.name }}" value="{{ field.value }}"
-                            {% block input_control %}
-                                {% if permisson < 0 %} readonly {% endif %} required
-                            {% endblock input_control %}
-                                />
+                        <div class="form_width_ajust">
+                            {% for field in user_form %}
+                            <div class="a">
+                                <div>{{ field.label }}</div>
+                                <div>:</div>
+                                <div><input type="text" class="inputarea" name="{{ field.name }}" value="{{ field.value }}"
+                                {% block input_control %}
+                                    {% if permisson < 0 %} readonly {% endif %} required
+                                {% endblock input_control %}
+                                    />
+                                </div>
                             </div>
-                        </div>
-                        {% endfor %}
+                            {% endfor %}
 
-                    {% block sub_form %}
-                    {% endblock sub_form %}
-                        <input type="hidden" name="info_submit" />
+                            {% block special_field %}
+
+                            {% endblock special_field %}
+
+
+                            {% block sub_form %}
+                            {% endblock sub_form %}
+                            <input type="hidden" name="info_submit" />
+                        </div>
                     </form>
                 </div>
 

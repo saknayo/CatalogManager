@@ -6,6 +6,7 @@ from django.dispatch import receiver
 from django.core.exceptions import ObjectDoesNotExist
 # Create your models here.
 
+
 class Infos(models.Model):
 	#info_id=models.IntegerField(default=0,name='info_id')#
 	#pub_date = models.DateTimeField('date published')
@@ -42,6 +43,10 @@ class Infos(models.Model):
 	dsyj_time    =models.CharField(max_length=200,null=True,name='导师意见时间')#
 	daoshi       =models.CharField(max_length=200,null=True,name='导师')#
 
+#class Reward(models.Model):
+#	info=models.ForeignKey(Infos,on_delete=models.CASCADE)#获奖情况
+#	name=models.CharField(max_length=100)
+
 class Status(models.Model):
 	""" save time,submit time,submit status
 	    audit time,audit status """
@@ -74,5 +79,6 @@ class Historys(models.Model):
 	edit_user   =models.ForeignKey(User , on_delete=models.CASCADE)
 	edit_time   =models.DateTimeField(null=True,name='edit_time')
 	edit_content=models.CharField(null=True,max_length=500)
+
 
 
