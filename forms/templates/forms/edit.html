@@ -4,7 +4,7 @@
 
 {% block form_title %}Edit Form{% endblock %}
 
-{% block input_control %} {% if permisson < 3 %} readonly {% endif %} {% endblock input_control %}
+{% block input_control %} {% if permisson < 3 %} readonly {% endif %} required {% endblock input_control %}
 
 {% block subinput_control %} {% if permisson < 3 %} readonly {% endif %} {% endblock %}
 
@@ -18,6 +18,8 @@
         <button class="form_action" type="submit" name="Save" form="info_submit" 
                 {% if permisson < 0 %} disabled {% endif %}  >
                 Save </button>
+
+        <div class="divider"></div>
         <button class="form_action" type="submit" name="Cancel" onclick="window.history.back()" >
                 Cancel
         </button>

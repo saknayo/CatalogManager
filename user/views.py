@@ -4,7 +4,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.forms import PasswordChangeForm,SetPasswordForm
 from django.http import HttpResponseRedirect,HttpResponse,Http404
 from django.utils.http import is_safe_url
 from django.views import generic
@@ -49,6 +49,26 @@ def change_password(request):
         'form': form
     })
 
+@login_required
+def set_password(request,username):
+    template_name='user/set_password.html'
+    if request.user.profile.user_level >= 7 and request.user.username != username:
+        user=User.objects.get(username=username)
+        if request.method == 'POST':
+            form = SetPasswordForm(user, request.POST)
+            if form.is_valid():
+                user = form.save()
+                update_session_auth_hash(request, user)  # Important!
+                messages.success(request, 'Your password was successfully updated!')
+                return redirect('user:home')
+            else:
+                messages.error(request, 'Please correct the error below.')
+        else:
+            form = SetPasswordForm(user)
+        return render(request, template_name, {
+            'form': form
+        })
+
 class ProfileView(LoginRequiredMixin,generic.DetailView):
     model = Profile
     template_name = 'user/profile.html'
@@ -69,23 +89,25 @@ class UserForm(djforms.ModelForm):
 class ProfileForm(djforms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('url', 'location', 'company', 'user_level')
+        #fields = ('url', 'location', 'company', 'user_level')
+        fields = ( 'user_level',)
 
 @login_required
 @transaction.atomic
 def update_profile(request,username):
     viewer=request.user
     user  =get_object_or_404(User,username=username)
+
+    if user == viewer or viewer.profile.user_level >=7 :
+        permisson = viewer.profile.user_level
+    else:
+        permisson = -1
+        
     if 'next' in request.POST and request.method == 'POST':
         next_url = request.POST.get('next','')
         #return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
         if is_safe_url( next_url ) or 1 :
             return HttpResponseRedirect(next_url)
-    if user == viewer or viewer.profile.user_level >=7 :
-        permisson = viewer.profile.user_level
-    else:
-        permisson = -1
-
     if request.method == 'POST':
         user_form = UserForm(request.POST, instance=user)
         profile_form = ProfileForm(request.POST, instance=user.profile)
@@ -93,7 +115,8 @@ def update_profile(request,username):
             user_form.save()
             profile_form.save()
             messages.success(request, 'Your profile was successfully updated!')
-            return HttpResponseRedirect(reverse('user:profile',args=(username,)))
+            #return HttpResponseRedirect(reverse('user:profile',args=(username,)))
+            return HttpResponseRedirect(reverse('user:home'))
         else:
             messages.error(request, 'Please correct the error below.')
     else:

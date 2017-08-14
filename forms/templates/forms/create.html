@@ -9,9 +9,9 @@
             {% block button %}
                 <div class="action_layout">
                     <button class="form_action" type="submit" name="Submit" form="info_submit" title="Once submitted,you can't edit again" 
-                            onclick="alert('Save successfully!')"
                             {% if permisson < 0 %} disabled {% endif %}  >
                             Submit </button>
+                    <div class="divider"></div>
                     <button class="form_action" type="submit" name="Cancel" onclick="window.history.back()" >
                             Cancel</button>
    

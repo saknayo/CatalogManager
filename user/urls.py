@@ -14,6 +14,7 @@ urlpatterns=[
             success_url='/user/home'),
             name='register'),
     url(r'^change_password/$', views.change_password, name='change_password'),
+    url(r'^set_password/(?P<username>[\d\w_]+)/$', views.set_password, name='set_password'),
 	url(r'^logout/$', views.logout_view, name='logout'),
 	url(r'^home/$', views.home,name='home'),
 	url(r'^profile/$', views.profile_redirect,name='profile_redirect'),

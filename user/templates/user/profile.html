@@ -23,7 +23,6 @@
                             </div>
                             {% endfor %}
 
-                            {% if permisson or 'b' in 'avcvb' %}
                             {% for field in profile_form %}
                             <div class="a">
                                 <div>{{ field.label }}</div>
@@ -34,9 +33,23 @@
                                 </div>
                             </div>
                             {% endfor %}
-                            {% endif %}
 
+                            <div class="a">
+                                <div>Password</div>
+                                <div>:</div>
+                                <div><input type="text" class="inputarea" value="********"
+                                    disabled/>
+                                    {% if user_form.username.value == request.user.username %}
+                                    <a class="button_like circle" href="{% url 'user:change_password' %}"
+                                        title="Change password">O</a>
+                                    {% elif permisson >= 7 %}
+                                    <a class="button_like circle" href="{% url 'user:set_password' user_form.username.value %}"
+                                        title="Set password">O</a>
+                                    {% endif %}
+                                </div>
+                            </div>
                             <br>
+
                         </div>
                     </form>
                 </div>
@@ -45,29 +58,15 @@
                     <input type="hidden" name="next" value="{{ request.META.HTTP_REFERER }}" />
                 </form>
                 <div class="action_layout">
-                    <button class="form_action" type="submit" form="uprofile" name="save" onclick="alert('Save successfully!')"
+                    <button class="form_action" type="submit" form="uprofile" name="save" 
                             {% if permisson < 0 %} disabled {% endif %}>
                             Save
                     </button> 
+                    <div class="divider"></div>
                     <button class="form_action" type="submit" form="action" name="back" >  
                             Back
                     </button>
                 </div>
 
             </div>
-
-            {% if user_form.username.value == request.user.username %}
-            <br>
-            <div class="content white_shadow">
-                <p>Change password</p>
-                <hr><br>
-                <form id="change-password" method="POST" action="{% url 'user:change_password' %}">
-                    {% csrf_token %} 
-                </form>
-                <div class="action_layout">
-                    <input class="form_action" type="submit" form="change-password" value="Change password" />  
-                </div>
-
-            </div>
-            {% endif %}
 {% endblock content %}
