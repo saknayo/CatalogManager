@@ -4,12 +4,12 @@
 
 {% block content %}
             <br>
-            <div class="content white_shadow ">
+            <div class="box1 content white-shadow">
                 <p>User</p>
                 <hr>
                 <br>
-                <div class="center" >
-                	<div class="scroll-table user-list">
+                <div class="box2 center" >
+	            	<div class="scroll-table user-list">
 			            <table id="personal_info">
 			            	<thead>
 				            	<tr>
@@ -32,33 +32,37 @@
 	            </div>
             </div>
             <br>
-            <div class="content white_shadow">
-            	<p>Submission <a class="stroked button_like" href="{% url 'forms:create' %}"><b>+</b></a></p>
+            <div class="box1 content white-shadow">
+            	<p>Submission <a class="stroked button-like" href="{% url 'forms:create' %}"><b>+</b></a></p>
             	<hr>
             	<br>
-                <div class="center">
-		            <table id="personal_info">
-		            	<tr>
-		            		<th>Info ID</th>
-		            		<th>Creator</th>
-		            		<th>Create Time</th>
-		            		<th>Last Save Time</th>
-		            	</tr>
-		            	{% for stats in infosset %}
-		            	<tr>
-		            		<td><a class="" href="{% url 'forms:edit' stats.info.pk %}">{{ stats.info.pk }} </a></td>
-		            		<td><a class="" href="{% url 'user:profile' stats.creator.username %}">{{ stats.creator.username }}</a></td>
-		            		<td>{{ stats.create_time }}</td>
-		            		<td>{{ stats.save_time }}</td>
-		            	</tr>
-		            	{% endfor %}
-		            </table>
+                <div class="box2 center">
+	            	<div class="scroll-table user-list">
+			            <table id="personal_info">
+			            	<tr>
+			            		<th>Info ID</th>
+			            		<th>Creator</th>
+			            		<th>Create Time</th>
+			            		<th>Last Save Time</th>
+			            	</tr>
+			            	{% for stats in infosset %}
+			            	<tr>
+			            		<td><a class="" href="{% url 'forms:edit' stats.info.pk %}">{{ stats.info.pk }} </a></td>
+			            		<td><a class="" href="{% url 'user:profile' stats.creator.username %}">{{ stats.creator.username }}</a></td>
+			            		<td>{{ stats.create_time }}</td>
+			            		<td>{{ stats.save_time }}</td>
+			            	</tr>
+			            	{% endfor %}
+			            </table>
+		            </div>
+		            {% if request.user.profile.user_level >= 7 %}
 		            <div class="center ">
 			            <br>
-			            <div class="form_width_ajust">
-			            <a class="button_like" href="{% url 'forms:index' %}" ><pre> Details </pre></a>
+			            <div class="width-ajust">
+			            <a class="button-like" href="{% url 'forms:index' %}" ><div><pre class="onbutton"> Details </pre></div></a>
 			            </div>
 		            </div>
+		            {% endif %}
 	            </div>
             </div>
 {% endblock content %}

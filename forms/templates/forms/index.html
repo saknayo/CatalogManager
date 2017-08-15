@@ -22,10 +22,12 @@
                                 {% endif %}
                                 <tr>
                                     <td>
+                                        <div class="table-cell">
                                         <input type="checkbox" name="info_{{ pk }}" value="{{ pk }}"  />
+                                        </div>
                                     </td>
                                     {% for field in info %}
-                                    <td>{{ field.value }}</td>
+                                    <td><div class="table-cell">{{ field.value }}</div></td>
                                     {% endfor %}
                                 </tr>
                                 {% endfor %}

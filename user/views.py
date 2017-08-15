@@ -146,9 +146,9 @@ def home(request):
         userset=User.objects.filter(username=user.username)
 
     if user.profile.user_level < 3 :
-        infosset=Status.objects.filter(creator=user).order_by("-create_time")[:10]
+        infosset=Status.objects.filter(creator=user).order_by("-create_time")
     else :
-        infosset=Status.objects.exclude(creator__isnull=True).exclude(info__isnull=True).order_by("-create_time")[:10]
+        infosset=Status.objects.exclude(creator__isnull=True).exclude(info__isnull=True).order_by("-create_time")
     #for i in infosset:
     #    username = i.creator.username
 

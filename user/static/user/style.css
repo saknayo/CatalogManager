@@ -4,132 +4,59 @@ body{
 	padding: 0;
 	margin: 0;
 }
-div{
-	background-color: transparent;
-}
 
-div#header,div#content {
-	display: table;
-	width: 80%;
-	margin: auto;
-	margin-top: 0;
-	padding-top: 0;
-}
 /* common style */
-.white_shadow{
+.white-shadow{
 	background-color: #f1f1f1;
 	border-radius: 5px;
 	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
 }
-.stroke{
-	color: white;
-	text-shadow:
-	-1px -1px 0 #000,  
-	1px -1px 0 #000,
-	-1px 1px 0 #000,
-	1px 1px 0 #000;
-}
-.center{
-	display: table;
+/*** div style ***/
+/* body container */
+div#container{
 	width: 80%;
-	margin: auto;
-}
-.form_center{
-	display: table;
-	background-color: transparent;
-	width: 80%;
-	margin: auto;
-}
-.form_width_ajust{
-	display: table;
 	margin: auto;
 }
 
-.divider {
+div.box1 {
+}
+div.box2 {
+	width: 80%;
+}
+div.box3 {
+}
+
+/* header & content */
+div.header ,div.content {
+	margin-left: auto;
+	margin-right: auto;
+}
+/* fix header */
+div.header {
+	position: fixed;
+	top: 0;
+	width: 80%;
+}
+/* white padding of content */
+div.content{
+	padding: 30px 40px ;
+}
+
+div.center{
+	display: table;
+	margin: auto;
+}
+/* auto ajust the width of wigets and center it */
+div.width-ajust{
+	display: table;
+	margin: auto;
+}
+/* insert backpace */
+div.divider {
 	display: inline;
 	margin: 3px;
 	height: auto;
 }
-.sub_info{
-	color: #de703c ;
-	display: inline;
-}
-.inputarea {
-	min-height: 20px;
-	border: 1px solid #aaa;
-	border-radius: 4px;
-	background-color: #fff;
-	outline: 0 !important;
-	padding: 2px;
-}
-.inputarea:focus{
-	box-shadow: 0 0 0 2px rgba(0,0,0,0.1);/*,2px 2px 2px 2px rgba(0,0,0,0.12);*/
-}
-}
-
-/* header style */
-div.header {
-	position: fixed;
-	margin-top: 0;
-	margin-left: auto;
-	margin-right: auto;
-	padding: 0;
-}
-
-/* index style */
-ul.index{
-	list-style-type: none;
-	margin: 0px;
-	padding: 0px;
-	overflow: hidden;
-	border-bottom-left-radius: 8px;
-	border-bottom-right-radius: 8px;
-	background-color: #666
-}
-ul.user{
-	list-style-type: none;
-	margin: 0px;
-	padding: 0px;
-	overflow: hidden;
-	border-radius: 8px;
-	background-color: #666
-}
-ul.user{
-	text-align: center;
-	background-color: transparent;
-	font-size: 180%;
-}
-li.index {
-	float: right;
-}
-li.index a{
-	font-size: 98%;
-	display: block;
-	color: white;
-	text-align: center;
-	padding: 4px;
-	padding-right: 15px;
-	text-decoration: none;
-}
-
-/* center the content div */
-div#outer {
-	display: table;
-	position: absolute;
-	width: 100%;
-	height: 100%;
-}
-div#middle {
-	display: table-cell;
-	vertical-align: middle;
-}
-div.content{
-	margin-left: auto;
-	margin-right: auto;
-	margin: auto;
-	padding: 30px 40px ;
-}
-
 /* form style */
 /* make the form likes a table*/
 div.a{
@@ -151,6 +78,56 @@ div.action_layout{
 	text-align: center;
 
 }
+
+/* table style */
+div.scroll-table{
+	display: 
+	margin: auto;
+	max-height: 400px;
+	max-width: 800px;
+	overflow: auto;
+}
+div.user-list {
+	max-height: 200px;
+}
+div.table-cell{
+	max-height: 30px;
+	overflow: auto;
+}
+/* index style */
+ul.index{
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+	background-color: #666
+}
+li.index {
+	float: right;
+}
+li.index a{
+	font-size: 98%;
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 4px;
+	padding-right: 15px;
+	text-decoration: none;
+}
+
+ul.vertical_container {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+li {
+	margin-bottom: 5px;
+}
+
+/* form */
+
 .form_action {
 	outline: 0 !important;
 	display: inline-block;
@@ -165,25 +142,7 @@ div.action_layout{
 	background-color: #aaa;
 	color: white;
 }
-/* button like link */
-.button_like {
-	color: black;
-	text-decoration: none;
-	padding: 0px 4px 0px 4px;
-	outline: 0 !important;
-	display: inline-block;
-	background-color: #ddd;
-	border-radius: 40px;
-	border: 1px solid #aaa;
-	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);
-}
-.button_like:active:focus {
-	background-color: #aaa;
-	color: white;	
-}
-.circle{
-	border-radius: 50%;
-}
+
 /* input box style */
 input[type=text], input[type=password] {
 	min-height: 20px;
@@ -194,21 +153,25 @@ input[type=text], input[type=password] {
 	padding: 2px;
 }
 input[type=text]:focus , input[type=password]:focus {
-	box-shadow: 0 0 0 2px rgba(0,0,0,0.1);/*,2px 2px 2px 2px rgba(0,0,0,0.12);*/
+	box-shadow: 0 0 0 2px rgba(0,1,2,0.2);/*,2px 2px 2px 2px rgba(0,0,0,0.12);*/
+}
+.inputarea {
+	min-height: 20px;
+	border: 1px solid #aaa;
+	border-radius: 4px;
+	background-color: #fff;
+	outline: 0 !important;
+	padding: 2px;
+}
+.inputarea:focus{
+	box-shadow: 0 0 0 2px rgba(0,0,2,0.1);/*,2px 2px 2px 2px rgba(0,0,0,0.12);*/
 }
 
-/* table style */
-
-div.scroll-table{
-	margin: auto;
-	max-height: 400px;
-	max-width: 800px;
-	overflow: auto;
-}
-div.user-list {
-	max-height: 200px;
+input:invalid{
+	box-shadow: 0 0 0 2px rgba(200,1,0,0.1)
 }
 
+/* table */
 table{
 	width: 100%;
 	border-collapse: collapse;
@@ -224,6 +187,8 @@ th{
 td{
 	min-width: 100px;
 	min-height: 30px;
+	max-height: 30px;
+	word-wrap:break-word;
 	border: 1px solid #999;
 	border-collapse: collapse;
 }
@@ -250,19 +215,57 @@ table#personal_info tr:nth-child(odd) {
 	background-color: #eee;
 }
 
+
+/* text */
 pre{
 	display: inline;
 }
-
-ul.vertical_container {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
+pre.onbutton{
+	display: inline;
+	padding: 2px;
 }
-li {
-	margin-bottom: 5px;
+.stroke{
+	color: white;
+	text-shadow:
+	-1px -1px 0 #000,  
+	1px -1px 0 #000,
+	-1px 1px 0 #000,
+	1px 1px 0 #000;
 }
 
-input:invalid{
-	border:2px dashed red;
+.sub_info{
+	color: #de703c ;
+	display: inline;
+}
+
+a {
+	color: black;
+	background-color: transparent;
+	text-decoration: underline;
+}
+a:visited {
+	color: grey;
+}
+/* button like link */
+.button-like {
+	color: #555;
+	text-decoration: none;
+	padding: 0px 4px 0px 4px;
+	outline: 0 !important;
+	display: inline-block;
+	background-color: #ddd;
+	border-radius: 40px;
+	border: 1px solid #aaa;
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);
+}
+.button-like:active:focus {
+	background-color: #aaa;
+	color: white;	
+}
+
+a.button-like:visited {
+	color: #555;
+}
+.circle{
+	border-radius: 50%;
 }

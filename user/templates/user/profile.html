@@ -4,13 +4,13 @@
 
 {% block content %}
             <br>
-            <div class="content white_shadow">
+            <div class="box1 content white-shadow">
                 <p>Profile</p>
                 <hr><br>
-                <div class="form_center">
+                <div class="box2 center">
                     <form method="post" id = "uprofile" action="{{ request.path }}">
                         {% csrf_token %} 
-                        <div class="form_width_ajust">
+                        <div class="box3 width-ajust">
                             {% for field in user_form %}
                             <div class="a">
                                 <div>{{ field.label }}</div>
@@ -40,10 +40,10 @@
                                 <div><input type="text" class="inputarea" value="********"
                                     disabled/>
                                     {% if user_form.username.value == request.user.username %}
-                                    <a class="button_like circle" href="{% url 'user:change_password' %}"
+                                    <a class="button-like circle" href="{% url 'user:change_password' %}"
                                         title="Change password">O</a>
                                     {% elif permisson >= 7 %}
-                                    <a class="button_like circle" href="{% url 'user:set_password' user_form.username.value %}"
+                                    <a class="button-like circle" href="{% url 'user:set_password' user_form.username.value %}"
                                         title="Set password">O</a>
                                     {% endif %}
                                 </div>

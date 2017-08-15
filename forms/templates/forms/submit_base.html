@@ -4,15 +4,15 @@
 
 {% block content %}
             <br>
-            <div class="content white_shadow">
+            <div class="box1 content white-shadow">
                 <p>{% block form_title %}Form Edit{% endblock %}</p>
                 <hr>
                 <br>
                 {% block form_content %}
-                <div class="form_center">
+                <div class="box2 center">
                     <form method="post" id="info_submit">
                         {% csrf_token %} 
-                        <div class="form_width_ajust">
+                        <div class="box3 width-ajust">
                             {% for field in user_form %}
                             <div class="a">
                                 <div>{{ field.label }}</div>

@@ -41,7 +41,7 @@
         {% else %}
          <li>
             <input type="text" class="inputarea" name="{{ k }}" value="{{ value }}"
-                    {% if permisson < 0 %} readonly {% endif %}  >
+                    {% if permisson < 3 %} readonly {% endif %}  >
         </li>       
         {% endif %}
         {% endfor %}

@@ -142,11 +142,15 @@ def edit_view(request,pk):
 		user_sub_form=UserAppSubForm(request.POST,instance=info)
 
 		if user_form.is_valid() and user_sub_form.is_valid() and user_reward_form.is_valid():
+			changed_data =''.join('{}({});'.format(k,request.POST[k]) for k in user_form.changed_data)
+			changed_data+=''.join('{}({});'.format(k,request.POST[k]) for k in user_sub_form.changed_data)
+			changed_data+=''.join('{};'.format(k) for k in user_reward_form.changed_data)
 			user_form.save()
 			user_reward_form.save()
 			user_sub_form.save()
 
-			his=Historys.objects.create(info=info,edit_user=request.user,edit_time=timezone.now(),edit_content='edit')
+			his=Historys.objects.create(info=info,edit_user=request.user,
+				edit_time=timezone.now(),edit_content='edit:{}'.format(changed_data))
 			his.save()
 		
 			return redirect(reverse('forms:edit',args=(info.pk,)))
