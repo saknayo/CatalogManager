@@ -80,8 +80,11 @@ div.action_layout{
 }
 
 /* table style */
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
 div.scroll-table{
-	display: 
 	margin: auto;
 	max-height: 400px;
 	max-width: 800px;
@@ -143,6 +146,16 @@ li {
 	color: white;
 }
 
+fieldset.filter-box {
+	border: solid 1px white;
+}
+select {
+	min-width: 100px;
+	min-height: 20px;
+	border :1px solid #aaa;
+	border-radius: 4px;
+	background-color: #f1f1f1;
+}
 /* input box style */
 input[type=text], input[type=password] {
 	min-height: 20px;
@@ -200,21 +213,20 @@ th:first-child,td:first-child {
 th:last-child,td:last-child {
 	border-right: none;
 }
-table#personal_info {
+table.list-like {
 	background-color: #fff;
 	overflow: auto;
 }
-table#personal_info th {
+table.list-like th {
 	color: white;
 	background-color: #aaa;
 }
-table#personal_info tr:nth-child(even) {
+table.list-like tr:nth-child(even) {
 	background-color: #fff;
 }
-table#personal_info tr:nth-child(odd) {
+table.list-like tr:nth-child(odd) {
 	background-color: #eee;
 }
-
 
 /* text */
 pre{

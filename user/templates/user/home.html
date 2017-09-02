@@ -10,7 +10,7 @@
                 <br>
                 <div class="box2 center" >
 	            	<div class="scroll-table user-list">
-			            <table id="personal_info">
+			            <table class="list-like">
 			            	<thead>
 				            	<tr>
 				            		<th>User ID</th>
@@ -24,7 +24,7 @@
 			            		<td class="left"><a class="" href="{% url 'user:profile' user.username%}">{{ user.username }}</a></td>
 			            		<td>{{ user.first_name }} {{ user.last_name}}</td>
 			            		<td>{{ user.email}}</td>
-			            		<td class="right">{{ user.last_login }}</td>
+			            		<td class="right">{{ user.last_login|date:"d/m/Y H:i:s"  }}</td>
 			            	</tr>
 			            	{% endfor %}
 			            </table>
@@ -38,7 +38,7 @@
             	<br>
                 <div class="box2 center">
 	            	<div class="scroll-table user-list">
-			            <table id="personal_info">
+			            <table class="list-like">
 			            	<tr>
 			            		<th>Info ID</th>
 			            		<th>Creator</th>
@@ -49,8 +49,8 @@
 			            	<tr>
 			            		<td><a class="" href="{% url 'forms:edit' stats.info.pk %}">{{ stats.info.pk }} </a></td>
 			            		<td><a class="" href="{% url 'user:profile' stats.creator.username %}">{{ stats.creator.username }}</a></td>
-			            		<td>{{ stats.create_time }}</td>
-			            		<td>{{ stats.save_time }}</td>
+			            		<td>{{ stats.create_time|date:"d/m/Y H:i:s"  }}</td>
+			            		<td>{{ stats.save_time|date:"d/m/Y H:i:s"  }}</td>
 			            	</tr>
 			            	{% endfor %}
 			            </table>

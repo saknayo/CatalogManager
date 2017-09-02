@@ -4,7 +4,7 @@
 
 {% block form_title %}Edit Form{% endblock %}
 
-{% block input_control %} {% if permisson < 3 %} readonly {% endif %} required {% endblock input_control %}
+{% block input_control %} {% if permisson < 3 and field.value %} readonly {% endif %} {% endblock input_control %}
 
 {% block subinput_control %} {% if permisson < 3 %} readonly {% endif %} {% endblock %}
 

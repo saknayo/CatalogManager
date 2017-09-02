@@ -8,6 +8,35 @@
 
 {% block complement %}{% endblock complement %}
 
+{% block scripts %}
+<script type="text/javascript">
+    function formPreset(){
+        var sequence=document.getElementsByClassName("sequence");
+        for (var i=0;i<sequence.length;i++){
+            if(sequence[i].value && sequence[i].value !="None" ) {
+            }
+            else{
+                sequence[i].readOnly=false;
+                break;
+            }
+        }
+        var inputfields=document.getElementsByClassName('inputarea');
+        for (var i=0;i<inputfields.length;i++){
+            if (inputfields[i].readOnly==true){
+                inputfields[i].style.background="#f1f1f1";
+            }else{
+                inputfields[i].style.background="#fff";
+            }
+        }
+    }
+    function filledCheck(e) {
+        if(e.value && e.value !="None" ) {
+            formPreset()
+        }
+    }
+    formPreset();
+</script>
+{% endblock scripts %}
 
 {% block special_field %}
 <div class="a">
@@ -30,18 +59,25 @@
 {% endblock special_field %}
 
 {% block sub_form %}
+    <hr>
     {% if permisson %}
     {% for field in user_sub_form %}
     <div class="a">
         <div><p class="sub_info">{{ field.label }}</p></div>
         <div>:</div>
-        <div><input type="text" class="inputarea" name="{{ field.name }}" value="{{ field.value }}"
+        <div><input type="text" class="inputarea sequence" name="{{ field.name }}" value="{{ field.value }}"
+                onchange="filledCheck(this)" 
+                {% if field.help_text %}
+                placeholder={{ field.help_text }}
+                {% endif %}
         	    {% block subinput_control %} disabled {% endblock %}
         	    />
         </div>
     </div>
     {% endfor %}
     {% endif %}
+    <img src onerror='formPreset()' > 
+    <script type="text/javascript">formPreset();</script>
 {% endblock sub_form %}           
 
 {% block button %}
@@ -67,20 +103,22 @@
                 <hr>
                 <br>
                 <div class="box2 center">
-                    <table id="personal_info">
-                        <tr>
-                            <th>Editor</th>
-                            <th>Edit Content</th>
-                            <th>Edit Time</th>
-                        </tr>
-                        {% for hist in historyset %}
-                        <tr>
-                            <td>{{ hist.edit_user.username }}</td>
-                            <td>{{ hist.edit_content }}</td>
-                            <td>{{ hist.edit_time }}</td>
-                        </tr>
-                        {% endfor %}
-                    </table>
+                    <div class="scroll-table user-list">
+                        <table class="list-like">
+                            <tr>
+                                <th>Editor</th>
+                                <th>Edit Content</th>
+                                <th>Edit Time</th>
+                            </tr>
+                            {% for hist in historyset %}
+                            <tr>
+                                <td>{{ hist.edit_user.username }}</td>
+                                <td>{{ hist.edit_content }}</td>
+                                <td>{{ hist.edit_time|date:"d/m/Y H:i:s" }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
                 </div>
             </div>
 {% endblock subcontent %}

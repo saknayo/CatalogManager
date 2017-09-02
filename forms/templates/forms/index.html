@@ -3,14 +3,77 @@
 {% block title %}Forms Index{% endblock %}
 
 {% block form_title %}Forms List{% endblock %}
+{% block scripts %}
+    <script type="text/javascript">
+        //var valuelist=document.filter.keyvalue
+        var valuelist =document.getElementById("keyvalue");
+        var values = new Array();
+
+        values[0]="";
+        values[1]={{ userlist|safe }};
+        values[2]={{ createtimelist|safe }};
+        function removeOptions(selectbox)
+        {
+            var i;
+            for(i = selectbox.options.length - 1 ; i >= 0 ; i--)
+            {
+                selectbox.remove(i);
+            }
+        }
+        function changecolor(e,index){
+            removeOptions(valuelist)
+            if (index > 0){
+                for (var i=0;i<values[index].length;i++){
+                    valuelist.appendChild( new Option(values[index][i],values[index][i]) );
+                }
+            }
+     
+        }
+
+        function updatevalues(selectedkeyword){
+            valuelist.option.length=0;
+            valuelist.style.background='red';
+            if (selectedkeyword > 0){
+                for (var i=0;i<values[selectedkeyword].length;i++){
+                    valuelist.appendChild( new Option(values[selectedkeyword][i],values[selectedkeyword][i]) );
+                }
+            }
+        }
+    </script>
+{% endblock scripts %}
 
 {% block input_control %} required {% endblock input_control %}
             {% block form_content %}
+                {% block form_filter %}
+                <div class="center">
+                    <form id='form-filter' method="post" name="filter">
+                        {% csrf_token %}
+                        <fieldset class="filter-box">
+                        <select name='keyword' onchange="changecolor(this,this.selectedIndex)">
+                            <option value="null"></option>
+                            <option value="username">username</option>
+                            <option value="createtime">createtime</option>
+                        </select>
+                        <pre> </pre>
+                        <select name='keyvalue' id="keyvalue">
+                        {% for user in userlist %}
+                            <option value={{ user.username }}>{{ user.username }}</option>
+                        {% endfor %}
+                        </select>
+                        <pre>    </pre>
+                        <button class="form_action" type="submit" name="form-filter" value="  filter  ">
+                        <pre>  </pre>filter<pre>  </pre></button>
+                        </fieldset>
+                    </form>
+                </div>
+                <br>
+
+                {% endblock form_filter %}
                 <div class="center" >
                     <div class="scroll-table">
                         <form id="selected_list" method="post">
                             {% csrf_token %}
-                            <table id="personal_info">
+                            <table class="list-like">
                                 {% for pk,info in infosset.items %}
                                 {% if forloop.first %}
                                 <tr class="thead-scroll">

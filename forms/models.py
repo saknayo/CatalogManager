@@ -10,38 +10,38 @@ from django.core.exceptions import ObjectDoesNotExist
 class Infos(models.Model):
 	#info_id=models.IntegerField(default=0,name='info_id')#
 	#pub_date = models.DateTimeField('date published')
-	report_time =models.IntegerField(default=0,name='上报时间')#上报时间
-	zb_name     =models.CharField(max_length=200,name='支部名称')#支部名称
-	dy_type     =models.CharField(max_length=200,name='党员类别')#党员类别
-	type_id     =models.IntegerField(default=0,name='类别编号')#类别编号
-	name        =models.CharField(max_length=200,name='姓名')#姓名
-	gender      =models.CharField(max_length=200,name='性别')#性别
-	birth_date  =models.DateField(default="1888-11-23",name='出生年月')#出生年月
-	id_num      =models.CharField(max_length=200,null=True,name='身份证号')#身份证号
-	nationality =models.CharField(max_length=200,null=True,name='民族')#名族
-	birth_area  =models.CharField(max_length=200,null=True,name='籍贯')#籍贯
-	job_class   =models.CharField(max_length=200,null=True,name='职级')#职级
-	job         =models.CharField(max_length=200,null=True,name='职务')#职务
-	job_name    =models.CharField(max_length=200,null=True,name='职称')#职称
-	whcd        =models.CharField(max_length=200,null=True,name='文化程度')#文化程度
-	xw          =models.CharField(max_length=200,null=True,name='学位')#学位
-	job_time    =models.CharField(max_length=200,null=True,name='工作时间')#工作时间
-	dzbtlrd_time=models.CharField(max_length=200,null=True,name='支部讨论入党时间')#支部讨论入党时间
-	dzbtlzz_time=models.CharField(max_length=200,null=True,name='支部讨论转正时间')#支部讨论转正时间
-	rewards     =models.CharField(max_length=200,null=True,name='获奖情况')#获奖情况
-	rdzys_num   =models.CharField(max_length=200,null=True,name='入党志愿书编号')#入党志愿书编号
+	name        =models.CharField(default="",max_length=200,           name='姓名')#姓名
+	report_time =models.CharField(default="",max_length=9  ,blank=True,name='上报时间')#上报时间
+	zb_name     =models.CharField(default="",max_length=200,blank=True,name='支部名称')#支部名称
+	dy_type     =models.CharField(default="",max_length=200,blank=True,name='党员类别')#党员类别
+	type_id     =models.CharField(default="",max_length=200,blank=True,name='类别编号')#类别编号
+	gender      =models.CharField(default="",max_length=200,blank=True,name='性别')#性别
+	birth_date  =models.CharField(default="",max_length=200,blank=True,name='出生年月')#出生年月
+	id_num      =models.CharField(default="",max_length=200,blank=True,name='身份证号')#身份证号
+	nationality =models.CharField(default="",max_length=200,blank=True,name='民族')#名族
+	birth_area  =models.CharField(default="",max_length=200,blank=True,name='籍贯')#籍贯
+	job_class   =models.CharField(default="",max_length=200,blank=True,name='职级')#职级
+	job         =models.CharField(default="",max_length=200,blank=True,name='职务')#职务
+	job_name    =models.CharField(default="",max_length=200,blank=True,name='职称')#职称
+	whcd        =models.CharField(default="",max_length=200,blank=True,name='文化程度')#文化程度
+	xw          =models.CharField(default="",max_length=200,blank=True,name='学位')#学位
+	job_time    =models.CharField(default="",max_length=200,blank=True,name='工作时间')#工作时间
+	dzbtlrd_time=models.CharField(default="",max_length=200,blank=True,name='支部讨论入党时间')#支部讨论入党时间
+	dzbtlzz_time=models.CharField(default="",max_length=200,blank=True,name='支部讨论转正时间')#支部讨论转正时间
+	rewards     =models.CharField(default="",max_length=200,blank=True,name='获奖情况')#获奖情况
+	rdzys_num   =models.CharField(default="",max_length=200,blank=True,name='入党志愿书编号')#入党志愿书编号
 
-	zbsj         =models.CharField(max_length=200,null=True,name='支部书记')#
-	jsrxm        =models.CharField(max_length=200,null=True,name='介绍人姓名')#
-	sqs_time     =models.CharField(max_length=200,null=True,name='申请书时间')#
-	ty_time      =models.CharField(max_length=200,null=True,name='推优时间')#
-	qrrdjjfz_time=models.CharField(max_length=200,null=True,name='确认入党积极分子的时间')#
-	dxjy_time    =models.CharField(max_length=200,null=True,name='党校结业时间')#
-	hd_time      =models.CharField(max_length=200,null=True,name='函调时间')#
-	gs_time      =models.CharField(max_length=200,null=True,name='公示时间')#
-	fzdxpxb      =models.CharField(max_length=200,null=True,name='发展对象培训班')#
-	dsyj_time    =models.CharField(max_length=200,null=True,name='导师意见时间')#
-	daoshi       =models.CharField(max_length=200,null=True,name='导师')#
+	zbsj         =models.CharField(default="",max_length=200,blank=True,name='支部书记')#
+	jsrxm        =models.CharField(default="",max_length=200,blank=True,name='介绍人姓名')#
+	sqs_time     =models.CharField(default="",max_length=200,blank=True,name='申请书时间')#
+	ty_time      =models.CharField(default="",max_length=200,blank=True,name='推优时间')#
+	qrrdjjfz_time=models.CharField(default="",max_length=200,blank=True,name='确认入党积极分子的时间')#
+	dxjy_time    =models.CharField(default="",max_length=200,blank=True,name='党校结业时间')#
+	hd_time      =models.CharField(default="",max_length=200,blank=True,name='函调时间')#
+	gs_time      =models.CharField(default="",max_length=200,blank=True,name='公示时间')#
+	fzdxpxb      =models.CharField(default="",max_length=200,blank=True,name='发展对象培训班')#
+	dsyj_time    =models.CharField(default="",max_length=200,blank=True,name='导师意见时间')#
+	daoshi       =models.CharField(default="",max_length=200,blank=True,name='导师')#
 
 #class Reward(models.Model):
 #	info=models.ForeignKey(Infos,on_delete=models.CASCADE)#获奖情况

@@ -19,7 +19,7 @@
                                 <div>:</div>
                                 <div><input type="text" class="inputarea" name="{{ field.name }}" value="{{ field.value }}"
                                 {% block input_control %}
-                                    {% if permisson < 0 %} readonly {% endif %} required
+                                    {% if permisson < 0 %} readonly {% endif %} 
                                 {% endblock input_control %}
                                     />
                                 </div>

@@ -5,9 +5,11 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 
 from .models import Infos,Status,Historys
+from django.contrib.auth.models import User
 from django import forms
 import re
 from collections import OrderedDict
+import datetime
 
 # Create your views here.
 class InfosForm(forms.ModelForm):
@@ -18,6 +20,8 @@ class InfosForm(forms.ModelForm):
 def submission_export(queryset,filename='mydata.csv'):
     import csv
     from django.utils.encoding import smart_str
+    time_str=datetime.datetime.now().strftime('%y%m%d_%H%M%S')
+    filename=time_str+filename
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename={}'.format(filename)
     writer = csv.writer(response, csv.excel)
@@ -30,6 +34,33 @@ def submission_export(queryset,filename='mydata.csv'):
 def get_selected_ids(post_dict):
 	id_p=re.compile(r'info_(?P<id>\d+)$')
 	return [int(id_p.search(k).group('id')) for k in post_dict if id_p.search(k)]
+def infoFilter(qset,key,value):
+	if key == 'username':
+		if value:
+			return qset.filter(status__creator__username=value)
+		else:
+			return qset
+	if key == 'createtime' :
+		if value:
+			return qset.filter(status__create_time__year=int(value))
+		else:
+			return qset
+	if key == 'null':
+		return qset
+def getCreatorList():
+	userlist=User.objects.filter(profile__user_level__gte=1).values_list('username')
+	userlist=list(i[0] for i in userlist)
+	return userlist
+	
+def getCreateTimeList(qset,pattern):
+	statusidlist=qset.values_list('status')
+	statusidlist=list(i[0] for i in statusidlist)
+	statuslist=Status.objects.filter(pk__in=statusidlist)
+	createtimelist=statuslist.values_list('create_time')
+	yeargroup=set(o[0].strftime(pattern) for o in createtimelist)
+	return list(yeargroup)
+
+
 @login_required
 def index_view(request):
 	template_name='forms/index.html'
@@ -37,12 +68,22 @@ def index_view(request):
 		return HttpResponse("Permission forbiden!")
 
 	infosset=Infos.objects.exclude(status__creator__isnull=True)
+	if request.method == 'POST' and 'form-filter' in request.POST :
+		filter_kw=request.POST['keyword']
+		filter_va=request.POST['keyvalue']
+		infosset= infoFilter(infosset,filter_kw,filter_va)
+	else:
+		filter_kw=filter_va=''
+
 	infos_dict={i.pk:InfosForm(instance=i) for i in infosset}
 	infos_dict=OrderedDict(sorted(infos_dict.items(),reverse=True))
-	selected_ids=get_selected_ids(request.POST)
-	selected_infos=[infos_dict[i.pk] for i in infosset if i.pk in selected_ids ]
+	userlist=getCreatorList()
+	createtimelist=getCreateTimeList(infosset,"%Y")
 
 	if request.method == 'POST' :
+		selected_ids=get_selected_ids(request.POST)
+		selected_infos=[infos_dict[i.pk] for i in infosset if i.pk in selected_ids ]
+
 		if 'download' in request.POST :
 			if selected_ids:
 				return submission_export(selected_infos,filename='selected_{}.csv'.format(len(selected_infos)))
@@ -54,7 +95,7 @@ def index_view(request):
 				instance.delete()
 			return redirect('forms:index')
 
-	return render(request,template_name,{'infosset':infos_dict,})
+	return render(request,template_name,{'infosset':infos_dict,'userlist':userlist ,'createtimelist':createtimelist})
 
 
 class UserAppForm(forms.ModelForm):
@@ -88,6 +129,19 @@ class UserAppSubForm(forms.ModelForm):
 			'支部书记','介绍人姓名','申请书时间','推优时间','确认入党积极分子的时间',
 			'党校结业时间','函调时间','公示时间','发展对象培训班','导师意见时间','导师',
 			)
+		help_texts={
+			'支部书记'				:"",
+			'介绍人姓名' 			:"",
+			'申请书时间' 			:" xxxx-xx-xx",
+			'推优时间' 				:" xxxx-xx-xx",
+			'确认入党积极分子的时间'  :" xxxx-xx-xx",
+			'党校结业时间' 			:" xxxx-xx-xx",
+			'函调时间' 				:" xxxx-xx-xx",
+			'公示时间' 				:" xxxx-xx-xx",
+			'发展对象培训班' 			:"",
+			'导师意见时间' 			:" xxxx-xx-xx",
+			'导师' 					:"",
+		}
 
 @login_required
 def create_view(request):
